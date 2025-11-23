@@ -119,4 +119,4 @@ Mirror of the above — EMA9 crosses **below** EMA21, RSI < 50, H1 EMA9 < H1 EMA
 ## License
 
 MIT — free to use and modify.
-<!-- updated: 2025-09-06 -->
+<!-- updated: 2025-11-23 -->
