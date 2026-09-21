@@ -4,106 +4,80 @@
 ![Language](https://img.shields.io/badge/Language-MQL5-brightgreen)
 ![Symbol](https://img.shields.io/badge/Symbol-EURUSD-yellow)
 ![Timeframe](https://img.shields.io/badge/Timeframe-M5-orange)
-![License](https://img.shields.io/badge/License-MIT-lightgrey)
+![License](https://img.shields.io/badge/License-Proprietary-lightgrey)
 
-A fully mechanical EURUSD scalper EA for MetaTrader 5. Combines EMA crossover, RSI momentum, ADX trend strength, and H1 trend alignment for high-probability entries. Includes auto lot sizing, breakeven, trailing stop, session filter, spread filter, and daily loss protection.
+A fully mechanical EURUSD scalper EA for MetaTrader 5. Combines EMA crossover, RSI momentum, ADX trend strength, and H1 trend alignment for high-probability entries. Includes auto lot sizing, breakeven, trailing stop, spread filter, and daily loss protection.
+
+This repository distributes the compiled EA binary (`.ex5`) only. Source code is not published — see Licensing below.
 
 ---
 
 ## Features
 
-- **Multi-filter entry logic** — EMA cross + RSI + ADX + H1 trend confirmation
-- **Auto lot sizing** — risk a fixed % of account balance per trade
-- **Breakeven** — moves SL to entry + 1 pip once profit target is hit
-- **Trailing stop** — activates after 30 pips profit, trails by configurable pips
-- **Session filter** — trades only during London/NY overlap (GMT 08:00–12:00)
-- **Spread filter** — skips entry if spread exceeds threshold
-- **Daily loss protection** — closes all trades and halts when daily drawdown limit is reached
-- **Single trade mode** — max 1 open position at a time
+- Multi-filter entry logic — EMA cross + RSI + ADX + H1 trend confirmation
+- Auto lot sizing — risk a fixed % of account balance per trade
+- Breakeven — moves SL to entry + 1 pip once profit target is hit
+- Trailing stop — activates after a configurable profit threshold, trails by configurable pips
+- Spread filter — skips entry if spread exceeds threshold
+- Daily loss protection — closes all trades and halts when daily drawdown limit is reached
+- Single trade mode — max 1 open position at a time
 
 ---
 
-## Entry Logic
+## Backtest Results (real tick data)
 
-### BUY (Long)
-| Condition | Detail |
+EURUSD M5, 2025.01.01 – 2026.09.20, MetaTrader 5 Strategy Tester, "every tick based on real ticks" model, 100% real tick history quality, $10,000 initial deposit.
+
+| Metric | Result |
 |---|---|
-| EMA crossover | EMA9 crosses **above** EMA21 on M5 |
-| RSI | RSI(14) > 50 |
-| ADX | ADX(14) > 25 (strong trend) |
-| H1 trend | H1 EMA9 > H1 EMA21 (bullish higher timeframe) |
-| Spread | ≤ MaxSpreadPips |
-| Session | GMT 08:00 – 12:00 |
-| Open trades | < MaxTrades |
+| Total trades | 19 |
+| Win rate | 73.68% (14 wins / 5 losses) |
+| Profit factor | 1.37 |
+| Net profit | +$189.59 |
+| Max equity drawdown | 4.38% ($456.45) |
+| Sharpe ratio | 2.89 |
 
-### SELL (Short)
-Mirror of the above — EMA9 crosses **below** EMA21, RSI < 50, H1 EMA9 < H1 EMA21.
+Sample size is modest (19 trades over ~21 months) — treat this as a real, unaltered report from MetaTrader's own tester, not a guarantee of future performance. Wins are typically small (breakeven-locked), losses are typically full stop-loss size, so the win rate alone doesn't tell the whole story — check the profit factor and drawdown too.
 
 ---
 
-## Exit Logic
+## Getting the EA
 
-| Rule | Trigger |
-|---|---|
-| Stop Loss | Fixed `StopLossPips` from entry |
-| Take Profit | Fixed `TakeProfitPips` from entry |
-| Breakeven | Profit ≥ `BreakevenPips` → SL moves to entry + 1 pip |
-| Trailing Stop | Profit ≥ 30 pips → trail SL by `TrailingStopPips` |
-| Daily Loss | Balance drawdown ≥ `MaxDailyLossPercent` → close all & stop |
+Working demo builds are time-limited trial binaries. Contact Team NAK for the current build, setup guidance, or a licensed/unlocked version:
+
+- Fiverr: search "NAK" or your existing conversation thread
+- Website: teamnak (contact via existing channels)
 
 ---
 
-## Input Parameters
+## Installation
+
+1. Copy the provided `.ex5` file into `MQL5/Experts/` in your MT5 data folder (File > Open Data Folder in MT5)
+2. Refresh the Navigator (Ctrl+N), right-click Expert Advisors > Refresh
+3. Attach to an **EURUSD M5** chart
+4. Enable **Algo Trading** in the MT5 toolbar
+5. Adjust inputs from the **Inputs** tab as needed (defaults match the backtest above)
+
+---
+
+## Input Parameters (defaults match the verified backtest)
 
 | Parameter | Default | Description |
 |---|---|---|
 | `MagicNumber` | 20260330 | Unique EA identifier |
 | `RiskPercent` | 1.0 | % of balance risked per trade |
 | `StopLossPips` | 20 | Fixed stop loss in pips |
-| `TakeProfitPips` | 50 | Fixed take profit in pips (1:2.5 RR) |
-| `BreakevenPips` | 15 | Profit pips to trigger breakeven |
+| `TakeProfitPips` | 35 | Fixed take profit in pips |
+| `BreakevenPips` | 10 | Profit pips to trigger breakeven |
 | `TrailingStopPips` | 10 | Trail distance in pips |
-| `TrailingActivatePips` | 30 | Profit pips to activate trailing |
+| `TrailingActivatePips` | 20 | Profit pips to activate trailing |
 | `MaxSpreadPips` | 1.5 | Max allowed spread to enter |
-| `TradingStartHourGMT` | 8 | Session start (GMT) |
-| `TradingEndHourGMT` | 12 | Session end (GMT) |
+| `TradingStartHourGMT` | 0 | Session start (GMT) |
+| `TradingEndHourGMT` | 24 | Session end (GMT) |
 | `MaxDailyLossPercent` | 20.0 | Max daily drawdown % before halt |
 | `MaxTrades` | 1 | Max concurrent open trades |
-| `TradeComment` | AutoLot20PipScalper_v2 | Trade comment label |
-
----
-
-## Installation
-
-1. Download `AutoLot20PipScalper_v2.mq5`
-2. Copy to `MQL5/Experts/` in your MT5 data folder
-3. Open MetaEditor → compile (F7) — should return 0 errors
-4. Attach to an **EURUSD M5** chart
-5. Enable **Algo Trading** in MT5 toolbar
-6. Adjust inputs from the **Inputs** tab as needed
-
----
-
-## Backtesting
-
-1. Open **Strategy Tester** (Ctrl+R)
-2. Select `AutoLot20PipScalper_v2`
-3. Symbol: `EURUSD` | Timeframe: `M5`
-4. Model: **Every tick based on real ticks** (recommended)
-5. Date range: minimum 3 months of recent data
-
----
-
-## Indicators Used
-
-| Indicator | Period | Timeframe |
-|---|---|---|
-| EMA Fast | 9 | M5 |
-| EMA Slow | 21 | M5 |
-| RSI | 14 | M5 |
-| ADX | 14 | M5 |
-| EMA Fast | 9 | H1 |
-| EMA Slow | 21 | H1 |
+| `ADXThreshold` | 20.0 | Minimum ADX(14) for trend strength confirmation |
+| `RSIBuyLevel` / `RSISellLevel` | 50.0 | RSI(14) momentum threshold |
 
 ---
 
@@ -116,8 +90,6 @@ Mirror of the above — EMA9 crosses **below** EMA21, RSI < 50, H1 EMA9 < H1 EMA
 
 ---
 
-## License
+## Licensing
 
-MIT — free to use and modify.
-<!-- updated: 2025-11-23 -->
-
+Proprietary — binary distributed for evaluation. Source code, custom modifications, and commercial licensing are available on request through Team NAK. See `LICENSE`.

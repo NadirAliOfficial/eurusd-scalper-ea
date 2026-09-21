@@ -1,21 +1,23 @@
-MIT License
+Proprietary License
 
-Copyright (c) 2025 Nadir Ali Khan
+Copyright (c) 2025-2026 Nadir Ali Khan (Team NAK)
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+The compiled Expert Advisor binary (.ex5) distributed in this repository is
+provided for personal evaluation and use only. Source code is not included
+and is not licensed for redistribution, modification, decompilation, or
+resale.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+Redistribution of the compiled binary in unmodified form is permitted
+provided this notice is retained.
+
+For source code access, custom development, or commercial licensing,
+contact Team NAK.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. TRADING
+FOREX INVOLVES SUBSTANTIAL RISK OF LOSS AND IS NOT SUITABLE FOR ALL
+INVESTORS. PAST BACKTEST PERFORMANCE DOES NOT GUARANTEE FUTURE RESULTS.
